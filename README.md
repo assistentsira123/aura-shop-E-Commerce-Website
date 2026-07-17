@@ -1,30 +1,30 @@
 # AURA — Headphones Store
 
-AURA ek static, multi-page e-commerce website hai jo audio products (headphones, earbuds, speakers, aur accessories) bechne ke liye bani hai. Pure HTML, CSS aur vanilla JavaScript se banaya gaya hai — koi build step ya framework nahi.
+AURA is a static, multi-page e-commerce website for selling audio products (headphones, earbuds, speakers, and accessories). Built entirely with HTML, CSS, and vanilla JavaScript — no build step, no framework.
 
 ## Live Pages
 
 | Page | File | Description |
 |---|---|---|
 | Home | `index.html` | Hero section, featured products, testimonials |
-| Shop | `shop.html` | Poore catalog ki listing, filters ke saath |
-| Product Detail | `product.html` | Single product ki details, specs, "Add to Cart" |
-| Cart | `cart.html` | Cart items, quantity update, subtotal |
-| Checkout | `checkout.html` | Order form aur checkout flow |
+| Shop | `shop.html` | Full catalog listing with filters |
+| Product Detail | `product.html` | Single product details, specs, "Add to Cart" |
+| Cart | `cart.html` | Cart items, quantity updates, subtotal |
+| Checkout | `checkout.html` | Order form and checkout flow |
 
 ## Project Structure
 
 ```
 aura-shop/
-├── index.html          # Home page
-├── shop.html           # Product listing/catalog
-├── product.html         # Product detail page
-├── cart.html            # Shopping cart
-├── checkout.html        # Checkout flow
+├── index.html            # Home page
+├── shop.html             # Product listing/catalog
+├── product.html          # Product detail page
+├── cart.html              # Shopping cart
+├── checkout.html          # Checkout flow
 ├── css/
-│   ├── tokens.css        # Design tokens (colors, type, spacing, motion)
-│   ├── base.css          # Global resets & base styles
-│   ├── components.css    # Shared UI components (buttons, cards, etc.)
+│   ├── tokens.css         # Design tokens (colors, type, spacing, motion)
+│   ├── base.css           # Global resets & base styles
+│   ├── components.css     # Shared UI components (buttons, cards, etc.)
 │   ├── navbar.css
 │   ├── footer.css
 │   ├── hero.css
@@ -44,22 +44,22 @@ aura-shop/
 
 ## Product Catalog
 
-Saare products `js/products-data.js` mein ek single `PRODUCTS` array mein define hain, jise har page (shop, product, cart, checkout) use karta hai. Categories:
+All products are defined in a single `PRODUCTS` array in `js/products-data.js`, which every page (shop, product, cart, checkout) reads from. Categories:
 
 - **Headphones** — AURA One, AURA Pro
 - **Earbuds** — AURA Buds, AURA Buds Sport
 - **Speakers** — AURA Mini, AURA Max
 - **Accessories** — AURA Case, AURA Cable, AURA Stand
 
-Har product mein `id`, `name`, `category`, `price`, `rating`, `reviews`, `specs`, aur `stock` fields hote hain.
+Each product has `id`, `name`, `category`, `price`, `rating`, `reviews`, `specs`, and `stock` fields.
 
-## Kaise Chalayein
+## Getting Started
 
-Ye ek static site hai — koi build/install step nahi chahiye:
+This is a static site — no build or install step required:
 
-1. Zip ko extract karein.
-2. `index.html` ko kisi bhi browser mein directly open kar lein, **ya**
-3. Better experience ke liye ek local server chalayein:
+1. Extract the zip file.
+2. Open `index.html` directly in any browser, **or**
+3. Run a local server for a better experience:
 
    ```bash
    # Python
@@ -69,14 +69,14 @@ Ye ek static site hai — koi build/install step nahi chahiye:
    npx serve .
    ```
 
-   Fir browser mein `http://localhost:8000` open karein.
+   Then open `http://localhost:8000` in your browser.
 
 ## Key Features
 
-- **Shared layout system** — `layout.js` navbar aur footer ko dynamically inject karta hai, taaki markup sirf ek jagah maintain karna pade.
-- **Persistent cart** — `cart-store.js` cart ko `localStorage` mein save karta hai (key: `aura_cart_v1`), jo page reload aur navigation ke baad bhi bana rehta hai.
-- **Design tokens** — `css/tokens.css` mein saare colors, fonts, spacing aur motion values centralized hain; baaki CSS files inhi variables ko reference karti hain.
-- **Reduced-motion support** — `prefers-reduced-motion` media query respect ki gayi hai.
+- **Shared layout system** — `layout.js` dynamically injects the navbar and footer, so the markup only needs to be maintained in one place.
+- **Persistent cart** — `cart-store.js` saves the cart to `localStorage` (key: `aura_cart_v1`), so it survives page reloads and navigation.
+- **Design tokens** — `css/tokens.css` centralizes all colors, fonts, spacing, and motion values; every other CSS file references these variables.
+- **Reduced-motion support** — respects the `prefers-reduced-motion` media query.
 - **Responsive** — mobile-friendly navbar/menu toggle.
 
 ## Tech Stack
@@ -88,5 +88,5 @@ Ye ek static site hai — koi build/install step nahi chahiye:
 
 ## Notes
 
-- Ye front-end-only demo hai — koi backend/API nahi hai; cart aur checkout data sirf browser ke `localStorage` mein rehta hai.
-- Naya product add karne ke liye bas `js/products-data.js` ke `PRODUCTS` array mein ek naya object add karein — baaki saare pages automatically use kar lenge.
+- This is a front-end-only demo — there is no backend/API; cart and checkout data lives entirely in the browser's `localStorage`.
+- To add a new product, just add a new object to the `PRODUCTS` array in `js/products-data.js` — every page will pick it up automatically.
