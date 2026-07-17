@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Checkout page
+   ========================================================================== */
+
+.checkout-page { padding-top: clamp(6.5rem, 12vw, 8.5rem); }
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--sp-6);
+  align-items: start;
+}
+
+.checkout-steps {
+  display: flex;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text-faint);
+}
+.checkout-steps .is-active { color: var(--color-accent); }
+
+.form-section { padding: var(--sp-5); margin-bottom: var(--sp-4); }
+.form-section h3 { font-size: 1rem; margin-bottom: var(--sp-4); }
+
+.form-row { display: grid; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.form-row.two { grid-template-columns: 1fr 1fr; }
+.form-row.three { grid-template-columns: 1.4fr 1fr 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 0.78rem; color: var(--color-text-muted); }
+.field input, .field select {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  color: var(--color-text);
+  font-size: var(--fs-small);
+  font-family: var(--font-body);
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+.field .error-text { font-size: 0.75rem; color: var(--color-accent); min-height: 1em; }
+.field.has-error input { border-color: var(--color-accent); }
+
+.checkout-summary { position: sticky; top: 100px; padding: var(--sp-5); }
+.checkout-summary h3 { font-size: 1.1rem; margin-bottom: var(--sp-4); }
+
+.checkout-line {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-block: var(--sp-2);
+}
+.checkout-line__media {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-panel-raised);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.checkout-line__media svg { width: 68%; }
+.checkout-line__media .qty-badge {
+  position: absolute;
+  top: -6px; right: -6px;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.checkout-line__name { font-size: var(--fs-small); flex: 1; }
+.checkout-line__price { font-family: var(--font-mono); font-size: var(--fs-small); }
+
+.checkout-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  padding-block: var(--sp-2);
+}
+.checkout-summary__row.total {
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-top: 1px solid var(--color-line);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-4);
+}
+
+.checkout-divider { border-top: 1px solid var(--color-line); margin-block: var(--sp-4); }
+
+/* ---- Success state ---- */
+.order-success {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-4);
+  max-width: 520px;
+  margin-inline: auto;
+}
+.order-success__icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(94, 234, 212, 0.12);
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  color: var(--color-teal);
+  display: grid;
+  place-items: center;
+  margin: 0 auto var(--sp-5);
+}
+.order-success__icon svg { width: 30px; height: 30px; }
+.order-success h2 { font-size: var(--fs-h2); margin-bottom: var(--sp-3); }
+.order-success p { color: var(--color-text-muted); margin-bottom: var(--sp-5); }
+.order-success .order-id { font-family: var(--font-mono); color: var(--color-accent); }
+
+@media (max-width: 900px) {
+  .checkout-grid { grid-template-columns: 1fr; }
+  .checkout-summary { position: static; }
+}
+@media (max-width: 560px) {
+  .form-row.two, .form-row.three { grid-template-columns: 1fr; }
+}

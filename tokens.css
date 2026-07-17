@@ -1,0 +1,68 @@
+/* ==========================================================================
+   AURA — Design Tokens
+   Single source of truth for color, type, spacing, motion.
+   Every component file reads from these variables — never hardcode values.
+   ========================================================================== */
+
+:root {
+  /* ---- Color: deep indigo studio, warm signal gold ---- */
+  --color-bg: #0F1020;
+  --color-bg-panel: #171932;
+  --color-bg-panel-raised: #1F2242;
+  --color-line: rgba(232, 233, 243, 0.10);
+  --color-line-strong: rgba(232, 233, 243, 0.18);
+
+  --color-text: #EDEEF7;
+  --color-text-muted: #9496B8;
+  --color-text-faint: #63658A;
+
+  --color-accent: #F2B84B;       /* signal gold — CTAs, highlights, waveform peaks */
+  --color-accent-dim: #B98A2E;
+  --color-accent-ink: #171200;   /* text on top of gold */
+
+  --color-teal: #5EEAD4;         /* secondary accent — used sparingly for data/specs */
+
+  /* ---- Type ---- */
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --fs-h1: clamp(2.6rem, 5vw + 1rem, 5rem);
+  --fs-h2: clamp(2rem, 3vw + 1rem, 3.2rem);
+  --fs-h3: clamp(1.3rem, 1.2vw + 1rem, 1.7rem);
+  --fs-body-lg: clamp(1.05rem, 0.4vw + 1rem, 1.25rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.8rem;
+
+  /* ---- Spacing scale (8px base) ---- */
+  --sp-1: 0.5rem;
+  --sp-2: 0.75rem;
+  --sp-3: 1rem;
+  --sp-4: 1.5rem;
+  --sp-5: 2rem;
+  --sp-6: 3rem;
+  --sp-7: 4.5rem;
+  --sp-8: 7rem;
+
+  --section-pad-y: clamp(4rem, 7vw, 7rem);
+  --container-w: 1200px;
+  --container-pad-x: clamp(1.25rem, 4vw, 3rem);
+
+  /* ---- Shape & motion ---- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur-med: 420ms;
+
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 0 1px rgba(242, 184, 75, 0.25), 0 12px 40px rgba(242, 184, 75, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-med: 0ms; }
+}

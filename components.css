@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Components — buttons, cards, badges, dividers
+   Reused across every section so the whole site stays visually consistent.
+   ========================================================================== */
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0.9rem 1.7rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  border: 1px solid transparent;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  box-shadow: var(--shadow-glow);
+}
+.btn--primary:hover { box-shadow: 0 0 0 1px rgba(242,184,75,0.4), 0 18px 50px rgba(242, 184, 75, 0.22); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-line-strong);
+}
+.btn--ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.btn--sm { padding: 0.65rem 1.25rem; font-size: var(--fs-small); }
+.btn--block { width: 100%; }
+
+/* ---- Card ---- */
+.card {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.card:hover { border-color: var(--color-line-strong); }
+
+/* ---- Badge / pill tag ---- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(242, 184, 75, 0.12);
+  color: var(--color-accent);
+  border: 1px solid rgba(242, 184, 75, 0.3);
+}
+
+/* ---- Waveform divider — the site's signature motif ---- */
+.waveform-divider {
+  width: 100%;
+  height: 40px;
+  display: block;
+  color: var(--color-line-strong);
+}
+.waveform-divider path { stroke: currentColor; }
+
+/* ---- Numeric spec chip (mono font for data) ---- */
+.spec {
+  font-family: var(--font-mono);
+  color: var(--color-teal);
+  font-size: var(--fs-small);
+}
