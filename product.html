@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="pageTitle">Product — AURA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/shop.css">
+<link rel="stylesheet" href="css/product.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main class="pdp">
+  <div class="container">
+    <nav class="pdp__breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span id="crumbName"></span>
+    </nav>
+
+    <div id="pdpContent"></div>
+
+    <section class="pdp__related">
+      <div class="section-head">
+        <span class="eyebrow">You might also like</span>
+        <h2 style="font-size: var(--fs-h3);">More from the catalog</h2>
+      </div>
+      <div class="shop-grid" id="relatedGrid"></div>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/products-data.js"></script>
+<script src="js/cart-store.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/product-card.js"></script>
+<script>
+  renderHeader('shop');
+  renderFooter();
+
+  const params = new URLSearchParams(location.search);
+  const product = getProductById(params.get('id')) || PRODUCTS[0];
+  let qty = 1;
+
+  document.getElementById('pageTitle').textContent = `${product.name} — AURA`;
+  document.getElementById('crumbName').textContent = product.name;
+
+  const onSale = product.compareAt && product.compareAt > product.price;
+
+  document.getElementById('pdpContent').innerHTML = `
+    <div class="pdp__grid">
+      <div class="pdp__media" aria-hidden="true">${productIconSvg(product.color)}</div>
+      <div class="pdp__info">
+        <span class="pdp__cat">${product.category}</span>
+        <h1 class="pdp__title">${product.name}</h1>
+        <p class="pdp__tagline">${product.tagline}</p>
+        <div class="pdp__rating">${starIconSvg()} ${product.rating} <span>(${product.reviews} reviews)</span></div>
+
+        <div class="pdp__price">
+          <span class="now">${formatPrice(product.price)}</span>
+          ${onSale ? `<span class="was">${formatPrice(product.compareAt)}</span>` : ''}
+          <span class="pdp__stock">${product.stock > 0 ? `In stock — ${product.stock} left` : 'Out of stock'}</span>
+        </div>
+
+        <p class="pdp__desc">${product.description}</p>
+
+        <ul class="pdp__specs">
+          ${product.specs.map((s) => `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${s}</li>`).join('')}
+        </ul>
+
+        <div class="pdp__buybox">
+          <div class="qty-stepper">
+            <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
+            <span id="qtyValue">1</span>
+            <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="btn btn--primary" id="addToCartBtn" ${product.stock <= 0 ? 'disabled' : ''}>
+            ${product.stock <= 0 ? 'Out of stock' : `Add to cart — ${formatPrice(product.price)}`}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const qtyValueEl = document.getElementById('qtyValue');
+  document.getElementById('qtyMinus').addEventListener('click', () => {
+    qty = Math.max(1, qty - 1);
+    qtyValueEl.textContent = qty;
+  });
+  document.getElementById('qtyPlus').addEventListener('click', () => {
+    qty = Math.min(product.stock, qty + 1);
+    qtyValueEl.textContent = qty;
+  });
+  document.getElementById('addToCartBtn').addEventListener('click', () => {
+    CartStore.add(product.id, qty);
+    showToast(`${qty} × ${product.name} added to cart`);
+  });
+
+  const related = PRODUCTS.filter((p) => p.id !== product.id && p.category === product.category).slice(0, 4);
+  const fallback = PRODUCTS.filter((p) => p.id !== product.id).slice(0, 4);
+  renderProductGrid(document.getElementById('relatedGrid'), related.length ? related : fallback);
+</script>
+</body>
+</html>

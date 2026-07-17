@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop — AURA</title>
+<meta name="description" content="Browse AURA headphones, earbuds, speakers and accessories." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/shop.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="shop-hero container">
+    <h1>Shop AURA</h1>
+    <p>Headphones, earbuds, speakers, and the accessories that go with them.</p>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="shop-toolbar">
+        <div class="shop-filters" id="filterPills"></div>
+        <div class="shop-search-sort">
+          <div class="shop-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="search" id="searchInput" placeholder="Search products…" aria-label="Search products">
+          </div>
+          <select class="shop-sort" id="sortSelect" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="results-count" id="resultsCount" style="margin-bottom: var(--sp-4);"></p>
+
+      <div class="shop-grid" id="shopGrid"></div>
+
+      <div class="shop-empty" id="shopEmpty" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <p>No products match your search. Try a different term or clear the filter.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/products-data.js"></script>
+<script src="js/cart-store.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/product-card.js"></script>
+<script>
+  renderHeader('shop');
+  renderFooter();
+
+  const filterPillsEl = document.getElementById('filterPills');
+  const gridEl = document.getElementById('shopGrid');
+  const emptyEl = document.getElementById('shopEmpty');
+  const countEl = document.getElementById('resultsCount');
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+
+  const params = new URLSearchParams(location.search);
+  let state = {
+    category: params.get('cat') || 'all',
+    query: '',
+    sort: 'featured'
+  };
+
+  function renderFilterPills() {
+    filterPillsEl.innerHTML = CATEGORIES.map((c) => `
+      <button type="button" class="filter-pill${c.id === state.category ? ' is-active' : ''}" data-cat="${c.id}">${c.label}</button>
+    `).join('');
+    filterPillsEl.querySelectorAll('.filter-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.category = btn.getAttribute('data-cat');
+        renderFilterPills();
+        applyAndRender();
+      });
+    });
+  }
+
+  function applyAndRender() {
+    let list = PRODUCTS.filter((p) => state.category === 'all' || p.category === state.category);
+
+    if (state.query.trim()) {
+      const q = state.query.trim().toLowerCase();
+      list = list.filter((p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.tagline.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+      );
+    }
+
+    switch (state.sort) {
+      case 'price-asc': list.sort((a, b) => a.price - b.price); break;
+      case 'price-desc': list.sort((a, b) => b.price - a.price); break;
+      case 'rating': list.sort((a, b) => b.rating - a.rating); break;
+      default: break;
+    }
+
+    countEl.textContent = `${list.length} product${list.length === 1 ? '' : 's'}`;
+
+    if (list.length === 0) {
+      gridEl.hidden = true;
+      emptyEl.hidden = false;
+    } else {
+      gridEl.hidden = false;
+      emptyEl.hidden = true;
+      renderProductGrid(gridEl, list);
+    }
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    state.query = e.target.value;
+    applyAndRender();
+  });
+
+  sortSelect.addEventListener('change', (e) => {
+    state.sort = e.target.value;
+    applyAndRender();
+  });
+
+  renderFilterPills();
+  applyAndRender();
+</script>
+</body>
+</html>

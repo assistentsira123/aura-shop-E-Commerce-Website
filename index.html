@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AURA — Headphones Tuned to Nothing But You</title>
+<meta name="description" content="Shop AURA headphones, earbuds, speakers and accessories. Adaptive ANC, 40-hour battery, spatial audio." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/shop.css">
+<link rel="stylesheet" href="css/testimonials.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow">AURA One — ANC Headphones</span>
+        <h1>Hear everything.<br><em>Skip nothing.</em></h1>
+        <p>Adaptive noise cancellation that tunes itself to your room, your commute, your flight — so the only thing left is the music.</p>
+
+        <div class="hero__actions">
+          <a href="shop.html" class="btn btn--primary">Shop AURA — from $19</a>
+          <a href="#featured" class="btn btn--ghost">Browse bestsellers</a>
+        </div>
+
+        <dl class="hero__stats">
+          <div><dt>40h</dt><dd>battery, ANC on</dd></div>
+          <div><dt>−38dB</dt><dd>peak noise cancelling</dd></div>
+          <div><dt>4.9</dt><dd>avg. rating, 2,300+ reviews</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__orb"></div>
+        <svg class="hero__phones" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 100C40 65 66 38 100 38C134 38 160 65 160 100" stroke="#EDEEF7" stroke-width="6" stroke-linecap="round"/>
+          <rect x="26" y="92" width="30" height="58" rx="15" fill="#171932" stroke="#F2B84B" stroke-width="3"/>
+          <rect x="144" y="92" width="30" height="58" rx="15" fill="#171932" stroke="#F2B84B" stroke-width="3"/>
+          <circle cx="41" cy="121" r="5" fill="#F2B84B"/>
+          <circle cx="159" cy="121" r="5" fill="#F2B84B"/>
+        </svg>
+        <svg class="hero__wave" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="16" width="6" height="8" rx="3" style="animation-delay:0ms"/>
+          <rect x="12" y="10" width="6" height="20" rx="3" style="animation-delay:80ms"/>
+          <rect x="24" y="4" width="6" height="32" rx="3" style="animation-delay:160ms"/>
+          <rect x="36" y="12" width="6" height="16" rx="3" style="animation-delay:240ms"/>
+          <rect x="48" y="0" width="6" height="40" rx="3" style="animation-delay:320ms"/>
+          <rect x="60" y="14" width="6" height="12" rx="3" style="animation-delay:400ms"/>
+          <rect x="72" y="6" width="6" height="28" rx="3" style="animation-delay:480ms"/>
+          <rect x="84" y="16" width="6" height="8" rx="3" style="animation-delay:560ms"/>
+          <rect x="96" y="2" width="6" height="36" rx="3" style="animation-delay:640ms"/>
+          <rect x="108" y="12" width="6" height="16" rx="3" style="animation-delay:720ms"/>
+          <rect x="120" y="8" width="6" height="24" rx="3" style="animation-delay:800ms"/>
+          <rect x="132" y="16" width="6" height="8" rx="3" style="animation-delay:880ms"/>
+          <rect x="144" y="4" width="6" height="32" rx="3" style="animation-delay:960ms"/>
+          <rect x="156" y="12" width="6" height="16" rx="3" style="animation-delay:1040ms"/>
+          <rect x="168" y="16" width="6" height="8" rx="3" style="animation-delay:1120ms"/>
+          <rect x="180" y="6" width="6" height="28" rx="3" style="animation-delay:1200ms"/>
+          <rect x="192" y="16" width="6" height="8" rx="3" style="animation-delay:1280ms"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FEATURED PRODUCTS (dynamic) ============================= -->
+  <section class="section" id="featured">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Bestsellers</span>
+        <h2>Start with what people buy first.</h2>
+        <p>Four products, straight from the catalog — add to cart right here, no page reload needed.</p>
+      </div>
+      <div class="shop-grid" id="featuredGrid"></div>
+      <div style="text-align:center; margin-top: var(--sp-6);">
+        <a href="shop.html" class="btn btn--ghost">View full shop</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ABOUT ============================= -->
+  <section class="section" id="about">
+    <div class="container about-copy" style="max-width:760px; margin-inline:auto; text-align:center;">
+      <span class="eyebrow" style="justify-content:center;">The Product</span>
+      <h2 style="font-size: var(--fs-h2); margin-bottom: var(--sp-4);">Built from the driver out, not the logo in.</h2>
+      <p class="text-muted" style="font-size: var(--fs-body-lg);">Every AURA product starts with a 40mm bio-cellulose driver tuned by ear over 300 iterations, then we build the housing around what it needs to sound right — not the other way around.</p>
+    </div>
+  </section>
+
+  <!-- ============================= TESTIMONIALS ============================= -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="testimonials__head">
+        <div class="section-head reveal" style="margin-bottom:0;">
+          <span class="eyebrow">Reviews</span>
+          <h2>What people put them on for.</h2>
+        </div>
+        <div class="testimonials__controls reveal">
+          <button type="button" data-t-prev aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" data-t-next aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="testimonials__track-wrap reveal">
+        <div class="testimonials__track">
+          <article class="card t-card">
+            <p class="t-card__quote">"The ANC handles my open-plan office better than the noise-cancelling booth we paid for."</p>
+            <div class="t-card__person"><div class="t-card__avatar">RS</div><div><strong>Rhea Sharma</strong><span>Product Designer</span></div></div>
+          </article>
+          <article class="card t-card">
+            <p class="t-card__quote">"40 hours actually means 40 hours. I charge these on Sundays and forget about it all week."</p>
+            <div class="t-card__person"><div class="t-card__avatar">DK</div><div><strong>Daniyal Khan</strong><span>Software Engineer</span></div></div>
+          </article>
+          <article class="card t-card">
+            <p class="t-card__quote">"Spatial audio on flights genuinely changed how I watch movies. Sound stays put even when I turn my head."</p>
+            <div class="t-card__person"><div class="t-card__avatar">ML</div><div><strong>Maria Lopez</strong><span>Travel Consultant</span></div></div>
+          </article>
+          <article class="card t-card">
+            <p class="t-card__quote">"Lightest over-ear pair I've worn for a full workday without ear fatigue."</p>
+            <div class="t-card__person"><div class="t-card__avatar">AH</div><div><strong>Ali Hassan</strong><span>Podcast Editor</span></div></div>
+          </article>
+        </div>
+      </div>
+      <div class="testimonials__dots"></div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/products-data.js"></script>
+<script src="js/cart-store.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/product-card.js"></script>
+<script src="js/scrollReveal.js" defer></script>
+<script src="js/testimonials.js" defer></script>
+<script>
+  renderHeader('home');
+  renderFooter();
+  renderProductGrid(document.getElementById('featuredGrid'), PRODUCTS.slice(0, 4));
+</script>
+</body>
+</html>

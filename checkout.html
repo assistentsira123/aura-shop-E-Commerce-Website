@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checkout — AURA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/checkout.css">
+<link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main class="checkout-page">
+  <div class="container">
+
+    <div id="checkoutView">
+      <div class="section-head" style="margin-bottom: var(--sp-5);">
+        <span class="eyebrow">Checkout</span>
+        <h2 style="font-size:var(--fs-h2);">Complete your order</h2>
+      </div>
+
+      <div class="checkout-steps">
+        <span class="is-active">1. Shipping</span> · <span>2. Payment</span> · <span>3. Confirm</span>
+      </div>
+
+      <div class="checkout-grid">
+        <form id="checkoutForm" novalidate>
+          <div class="card form-section">
+            <h3>Contact & shipping</h3>
+            <div class="form-row">
+              <div class="field" id="field-email">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+            <div class="form-row two">
+              <div class="field" id="field-firstName">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="field" id="field-lastName">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field" id="field-address">
+                <label for="address">Street address</label>
+                <input type="text" id="address" name="address" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+            <div class="form-row three">
+              <div class="field" id="field-city">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="field" id="field-state">
+                <label for="state">State / Province</label>
+                <input type="text" id="state" name="state" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="field" id="field-zip">
+                <label for="zip">ZIP / Postal code</label>
+                <input type="text" id="zip" name="zip" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card form-section">
+            <h3>Payment</h3>
+            <div class="form-row">
+              <div class="field" id="field-cardName">
+                <label for="cardName">Name on card</label>
+                <input type="text" id="cardName" name="cardName" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+            <div class="form-row three">
+              <div class="field" id="field-cardNumber">
+                <label for="cardNumber">Card number</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 1234 1234 1234" inputmode="numeric" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="field" id="field-cardExpiry">
+                <label for="cardExpiry">Expiry (MM/YY)</label>
+                <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" required>
+                <span class="error-text"></span>
+              </div>
+              <div class="field" id="field-cardCvc">
+                <label for="cardCvc">CVC</label>
+                <input type="text" id="cardCvc" name="cardCvc" placeholder="123" inputmode="numeric" required>
+                <span class="error-text"></span>
+              </div>
+            </div>
+            <p class="text-muted" style="font-size:0.78rem;">This is a demo store — no real payment is processed and no card data is stored.</p>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block" id="placeOrderBtn">Place order</button>
+        </form>
+
+        <aside class="card checkout-summary">
+          <h3>Order summary</h3>
+          <div id="summaryLines"></div>
+          <div class="checkout-divider"></div>
+          <div class="checkout-summary__row"><span>Subtotal</span><span id="sumSubtotal"></span></div>
+          <div class="checkout-summary__row"><span>Shipping</span><span id="sumShipping"></span></div>
+          <div class="checkout-summary__row total"><span>Total</span><span id="sumTotal"></span></div>
+        </aside>
+      </div>
+    </div>
+
+    <div id="successView" hidden></div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/products-data.js"></script>
+<script src="js/cart-store.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/product-card.js"></script>
+<script>
+  renderHeader('shop');
+  renderFooter();
+
+  const SHIPPING_FLAT = 8;
+  const FREE_SHIPPING_THRESHOLD = 150;
+
+  function renderSummary() {
+    const lines = CartStore.lines();
+    const linesEl = document.getElementById('summaryLines');
+
+    if (lines.length === 0) {
+      window.location.href = 'cart.html';
+      return;
+    }
+
+    linesEl.innerHTML = lines.map((l) => `
+      <div class="checkout-line">
+        <div class="checkout-line__media">${productIconSvg(l.product.color)}<span class="qty-badge">${l.qty}</span></div>
+        <span class="checkout-line__name">${l.product.name}</span>
+        <span class="checkout-line__price">${formatPrice(l.lineTotal)}</span>
+      </div>
+    `).join('');
+
+    const subtotal = CartStore.subtotal();
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT;
+    const total = subtotal + shipping;
+
+    document.getElementById('sumSubtotal').textContent = formatPrice(subtotal);
+    document.getElementById('sumShipping').textContent = shipping === 0 ? 'Free' : formatPrice(shipping);
+    document.getElementById('sumTotal').textContent = formatPrice(total);
+  }
+
+  renderSummary();
+  window.addEventListener('cart:updated', renderSummary);
+
+  /* ---- Validation ---- */
+  const validators = {
+    email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Enter a valid email address.',
+    firstName: (v) => v.trim().length > 0 || 'Required.',
+    lastName: (v) => v.trim().length > 0 || 'Required.',
+    address: (v) => v.trim().length > 3 || 'Enter a full street address.',
+    city: (v) => v.trim().length > 0 || 'Required.',
+    state: (v) => v.trim().length > 0 || 'Required.',
+    zip: (v) => /^[A-Za-z0-9\- ]{3,10}$/.test(v.trim()) || 'Enter a valid postal code.',
+    cardName: (v) => v.trim().length > 0 || 'Required.',
+    cardNumber: (v) => /^[\d\s]{13,19}$/.test(v.trim()) || 'Enter a valid card number.',
+    cardExpiry: (v) => /^(0[1-9]|1[0-2])\/\d{2}$/.test(v.trim()) || 'Use MM/YY format.',
+    cardCvc: (v) => /^\d{3,4}$/.test(v.trim()) || 'Enter a valid CVC.'
+  };
+
+  const form = document.getElementById('checkoutForm');
+
+  function validateField(name) {
+    const input = form.elements[name];
+    const wrapper = document.getElementById('field-' + name);
+    const errorEl = wrapper.querySelector('.error-text');
+    const result = validators[name](input.value);
+    if (result === true) {
+      wrapper.classList.remove('has-error');
+      errorEl.textContent = '';
+      return true;
+    }
+    wrapper.classList.add('has-error');
+    errorEl.textContent = result;
+    return false;
+  }
+
+  Object.keys(validators).forEach((name) => {
+    form.elements[name].addEventListener('blur', () => validateField(name));
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const allValid = Object.keys(validators)
+      .map(validateField)
+      .every(Boolean);
+
+    if (!allValid) {
+      const firstError = form.querySelector('.has-error input');
+      if (firstError) firstError.focus();
+      return;
+    }
+
+    const orderId = 'AURA-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+    const total = document.getElementById('sumTotal').textContent;
+    const email = form.elements.email.value;
+
+    document.getElementById('checkoutView').hidden = true;
+    const successEl = document.getElementById('successView');
+    successEl.hidden = false;
+    successEl.innerHTML = `
+      <div class="card order-success">
+        <div class="order-success__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2>Order placed</h2>
+        <p>Confirmation <span class="order-id">${orderId}</span> sent to <strong>${email}</strong>.<br>Total charged: <strong>${total}</strong>.</p>
+        <a href="shop.html" class="btn btn--primary">Continue shopping</a>
+      </div>
+    `;
+
+    CartStore.clear();
+  });
+</script>
+</body>
+</html>
